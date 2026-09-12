@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+@layer theme {
+  .light {
+    --background: 248 250 252;
+    --surface: 255 255 255;
+    --surface-secondary: 241 245 249;
+    --foreground: 15 23 42;
+    --muted-foreground: 100 116 139;
+    --border: 226 232 240;
+    --primary: 79 70 229;
+    --success: 22 163 74;
+    --warning: 217 119 6;
+    --destructive: 220 38 38;
+  }
+
+  .dark {
+    --background: 11 18 32;
+    --surface: 17 24 39;
+    --surface-secondary: 30 41 59;
+    --foreground: 241 245 249;
+    --muted-foreground: 148 163 184;
+    --border: 51 65 85;
+    --primary: 129 140 248;
+    --success: 74 222 128;
+    --warning: 251 191 36;
+    --destructive: 248 113 113;
+  }
+}
