@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { memo, useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { memo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { ProductImage } from '@/components/ProductImage';
 import { Product } from '@/types/Product';
 import { formatCurrency } from '@/utils/formatCurrency';
 
@@ -13,39 +14,25 @@ interface ProductCardProps {
 
 function ProductCardComponent({ product, onPress }: ProductCardProps) {
   const { colors } = useAppTheme();
-  const [hasImageError, setHasImageError] = useState(false);
-
-  useEffect(() => {
-    setHasImageError(false);
-  }, [product.imageUrl]);
 
   return (
     <Pressable
       accessibilityLabel={`${product.title}, ${product.category}, stock esperado ${product.expectedStock}`}
+      accessibilityRole={onPress ? 'button' : undefined}
       disabled={!onPress}
       onPress={onPress}
       style={({ pressed }) => [
         styles.container,
         {
-          backgroundColor: colors.surface,
+          backgroundColor: pressed && onPress ? colors.surfaceSecondary : colors.surface,
           borderColor: colors.border,
           opacity: pressed ? 0.92 : 1,
         },
       ]}>
-      <View style={[styles.imageWrap, { backgroundColor: colors.surfaceSecondary }]}>
-        {hasImageError ? (
-          <View style={styles.imageFallback}>
-            <Ionicons name="cube-outline" size={34} color={colors.textSecondary} />
-          </View>
-        ) : (
-          <Image
-            source={{ uri: product.imageUrl }}
-            onError={() => setHasImageError(true)}
-            resizeMode="cover"
-            style={styles.image}
-          />
-        )}
-      </View>
+      <ProductImage
+        accessibilityLabel={`Imagen de ${product.title}`}
+        uri={product.imageUrl}
+      />
 
       <View style={styles.content}>
         <View style={styles.titleGroup}>
@@ -102,21 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 10,
     minWidth: 0,
-  },
-  image: {
-    height: '100%',
-    width: '100%',
-  },
-  imageFallback: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  imageWrap: {
-    borderRadius: 8,
-    height: 94,
-    overflow: 'hidden',
-    width: 94,
   },
   metaGrid: {
     flexDirection: 'row',

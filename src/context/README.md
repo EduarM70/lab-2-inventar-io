@@ -2,4 +2,4 @@
 
 Esta carpeta queda preparada para la futura implementacion con Context API.
 
-No se implementa `AuditContext` en FASE 1.
+`AuditContext` se implementa desde FASE 5 para mantener `auditEntries` en memoria.

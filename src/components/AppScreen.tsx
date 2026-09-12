@@ -1,14 +1,15 @@
 import { PropsWithChildren } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '@/hooks/useAppTheme';
 
 interface AppScreenProps extends PropsWithChildren {
+  edges?: Edge[];
   scroll?: boolean;
 }
 
-export function AppScreen({ children, scroll = true }: AppScreenProps) {
+export function AppScreen({ children, edges, scroll = true }: AppScreenProps) {
   const { colors } = useAppTheme();
 
   const content = scroll ? (
@@ -22,7 +23,7 @@ export function AppScreen({ children, scroll = true }: AppScreenProps) {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView edges={edges} style={[styles.container, { backgroundColor: colors.background }]}>
       {content}
     </SafeAreaView>
   );

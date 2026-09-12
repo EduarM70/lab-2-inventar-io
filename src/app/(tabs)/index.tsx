@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
 
@@ -14,6 +15,7 @@ import { Product } from '@/types/Product';
 
 export default function InventoryScreen() {
   const { colors } = useAppTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
   const inventoryStats = useMemo(() => {
@@ -51,8 +53,18 @@ export default function InventoryScreen() {
       : `${products.length} productos`;
 
   const renderProduct = useCallback(
-    ({ item }: ListRenderItemInfo<Product>) => <ProductCard product={item} />,
-    [],
+    ({ item }: ListRenderItemInfo<Product>) => (
+      <ProductCard
+        product={item}
+        onPress={() =>
+          router.push({
+            pathname: '/product/[id]',
+            params: { id: item.id },
+          })
+        }
+      />
+    ),
+    [router],
   );
 
   return (

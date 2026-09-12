@@ -27,6 +27,14 @@
     "plugins": [
       "expo-router",
       [
+        "expo-camera",
+        {
+          "cameraPermission": "Permite que inventar.io use la camara para escanear codigos de productos.",
+          "barcodeScannerEnabled": true,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
