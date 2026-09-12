@@ -9,13 +9,14 @@ import { ProductCard } from '@/components/ProductCard';
 import { SearchBar } from '@/components/SearchBar';
 import { SectionHeader } from '@/components/SectionHeader';
 import { StatCard } from '@/components/StatCard';
-import { products } from '@/data/products';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useCatalog } from '@/hooks/useCatalog';
 import { Product } from '@/types/Product';
 
 export default function InventoryScreen() {
   const { colors } = useAppTheme();
   const router = useRouter();
+  const { products } = useCatalog();
   const [searchQuery, setSearchQuery] = useState('');
 
   const inventoryStats = useMemo(() => {
@@ -30,7 +31,7 @@ export default function InventoryScreen() {
       productCount: products.length,
       totalExpectedStock,
     };
-  }, []);
+  }, [products]);
 
   const filteredProducts = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -45,7 +46,7 @@ export default function InventoryScreen() {
 
       return searchableContent.includes(normalizedQuery);
     });
-  }, [searchQuery]);
+  }, [products, searchQuery]);
 
   const resultLabel =
     searchQuery.trim().length > 0

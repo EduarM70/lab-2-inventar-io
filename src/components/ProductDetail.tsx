@@ -7,11 +7,20 @@ import { Product } from '@/types/Product';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 interface ProductDetailProps {
-  product: Product;
+  isBarcodeModified: boolean;
+  onEditBarcode: () => void;
+  onRestoreBarcode?: () => void;
   onStartAudit: () => void;
+  product: Product;
 }
 
-export function ProductDetail({ product, onStartAudit }: ProductDetailProps) {
+export function ProductDetail({
+  isBarcodeModified,
+  onEditBarcode,
+  onRestoreBarcode,
+  onStartAudit,
+  product,
+}: ProductDetailProps) {
   const { colors } = useAppTheme();
 
   return (
@@ -56,10 +65,55 @@ export function ProductDetail({ product, onStartAudit }: ProductDetailProps) {
                 borderColor: colors.border,
               },
             ]}>
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
-              Codigo de barras
-            </Text>
+            <View style={styles.barcodeHeaderRow}>
+              <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+                Codigo de barras
+              </Text>
+              {isBarcodeModified ? (
+                <View style={[styles.modifiedBadge, { backgroundColor: colors.warning }]}>
+                  <Text style={styles.modifiedBadgeText}>Modificado</Text>
+                </View>
+              ) : null}
+            </View>
             <Text style={[styles.barcodeValue, { color: colors.text }]}>{product.barcode}</Text>
+          </View>
+
+          <View style={styles.barcodeActions}>
+            <Pressable
+              accessibilityLabel="Editar codigo de barras"
+              accessibilityRole="button"
+              onPress={onEditBarcode}
+              style={({ pressed }) => [
+                styles.barcodeActionButton,
+                {
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.9 : 1,
+                },
+              ]}>
+              <Ionicons name="create-outline" size={16} color={colors.text} />
+              <Text style={[styles.barcodeActionText, { color: colors.text }]}>
+                Editar codigo de barras
+              </Text>
+            </Pressable>
+
+            {isBarcodeModified && onRestoreBarcode ? (
+              <Pressable
+                accessibilityLabel="Restaurar codigo original"
+                accessibilityRole="button"
+                onPress={onRestoreBarcode}
+                style={({ pressed }) => [
+                  styles.barcodeActionButton,
+                  {
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.9 : 1,
+                  },
+                ]}>
+                <Ionicons name="refresh-outline" size={16} color={colors.textSecondary} />
+                <Text style={[styles.barcodeActionText, { color: colors.textSecondary }]}>
+                  Restaurar codigo original
+                </Text>
+              </Pressable>
+            ) : null}
           </View>
         </InfoSection>
       </View>
@@ -143,11 +197,34 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     lineHeight: 22,
   },
+  barcodeActionButton: {
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 6,
+    minHeight: 40,
+    paddingHorizontal: 12,
+  },
+  barcodeActions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  barcodeActionText: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
   barcodeBox: {
     borderRadius: 8,
     borderWidth: 1,
     gap: 6,
     padding: 14,
+  },
+  barcodeHeaderRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   barcodeValue: {
     fontSize: 16,
@@ -198,6 +275,18 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     lineHeight: 23,
+  },
+  modifiedBadge: {
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  modifiedBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
   },
   section: {
     borderRadius: 8,

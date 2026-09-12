@@ -8,14 +8,15 @@ import { AppScreen } from '@/components/AppScreen';
 import { CameraScanner } from '@/components/CameraScanner';
 import { EmptyState } from '@/components/EmptyState';
 import { SectionHeader } from '@/components/SectionHeader';
-import { products } from '@/data/products';
 import { useAppTheme } from '@/hooks/useAppTheme';
+import { useCatalog } from '@/hooks/useCatalog';
 
 type ScanStatus = 'idle' | 'found' | 'not-found' | 'camera-error';
 
 export default function ScannerScreen() {
   const { colors } = useAppTheme();
   const router = useRouter();
+  const { products } = useCatalog();
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [scanStatus, setScanStatus] = useState<ScanStatus>('idle');
@@ -93,7 +94,7 @@ export default function ScannerScreen() {
         });
       }, 500);
     },
-    [router],
+    [products, router],
   );
 
   const handleCameraError = useCallback((message: string) => {

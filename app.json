@@ -41,6 +41,20 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Permite que inventar.io use tu ubicacion para registrar donde se realizo cada auditoria."
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Esta aplicacion utiliza el microfono para adjuntar notas de voz a las auditorias de inventario.",
+          "enableBackgroundRecording": false,
+          "enableBackgroundPlayback": false
+        }
       ]
     ],
     "experiments": {

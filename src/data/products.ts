@@ -1,6 +1,9 @@
 import { Product } from '@/types/Product';
 
-export const products: Product[] = [
+// Catalogo inicial/default de la app. A partir de FASE 9 esta lista deja de ser la fuente
+// de verdad en runtime: CatalogProvider la usa como semilla y aplica los overrides de barcode
+// persistidos en AsyncStorage. NO se debe mutar este arreglo ni usarlo directamente en pantallas.
+export const initialProducts: Product[] = [
   {
     id: 'product-001',
     title: 'Laptop Dell Latitude 5420',

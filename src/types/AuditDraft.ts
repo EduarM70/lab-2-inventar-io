@@ -6,4 +6,5 @@ export interface AuditDraft {
   productId: string;
   productTitle: string;
   actionType: AuditDraftActionType;
+  audioNoteUrl?: string;
 }
