@@ -1,4 +1,7 @@
-export function isValidCoordinate(latitude: number, longitude: number): boolean {
+export function isValidCoordinate(
+  latitude: number,
+  longitude: number,
+): boolean {
   return (
     Number.isFinite(latitude) &&
     Number.isFinite(longitude) &&

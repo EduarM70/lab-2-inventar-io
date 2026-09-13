@@ -1,12 +1,12 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
-import { CatalogContext } from '@/context/CatalogContext';
+import { CatalogContext } from "@/context/CatalogContext";
 
 export function useCatalog() {
   const context = useContext(CatalogContext);
 
   if (!context) {
-    throw new Error('useCatalog must be used within CatalogProvider');
+    throw new Error("useCatalog must be used within CatalogProvider");
   }
 
   return context;
